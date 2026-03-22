@@ -1,0 +1,82 @@
+.todo-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  transition: background 0.15s, border-color 0.15s, opacity 0.2s;
+}
+.todo-item:hover              { background: var(--bg-hover); }
+.todo-item--done              { opacity: 0.55; }
+.todo-item--overdue           { border-left: 3px solid var(--danger); }
+.todo-item--editing           { background: transparent; border: none; padding: 0; }
+
+/* Checkbox button */
+.todo-check {
+  flex-shrink: 0;
+  width: 20px; height: 20px;
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem;
+  color: var(--bg);
+  transition: background 0.15s, border-color 0.15s;
+  margin-top: 2px;
+}
+.todo-check:hover       { border-color: var(--accent); }
+.todo-check--done       { background: var(--accent); border-color: var(--accent); }
+
+/* Content */
+.todo-content { flex: 1; min-width: 0; }
+.todo-title {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  word-break: break-word;
+  line-height: 1.4;
+}
+.todo-item--done .todo-title {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.todo-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 5px;
+  flex-wrap: wrap;
+}
+.todo-priority {
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.todo-due {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.todo-due--overdue { color: var(--danger); font-weight: 500; }
+.todo-age { font-size: 0.7rem; color: var(--text-dim); margin-left: auto; }
+
+/* Action buttons */
+.todo-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.todo-btn {
+  width: 28px; height: 28px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.todo-btn--edit:hover:not(:disabled)   { border-color: var(--info); color: var(--info); }
+.todo-btn--delete:hover:not(:disabled) { border-color: var(--danger); color: var(--danger); background: rgba(248,113,113,0.08); }
+.todo-btn:disabled { opacity: 0.3; cursor: not-allowed; }

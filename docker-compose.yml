@@ -1,0 +1,85 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# DOCKER COMPOSE  (docker-compose.yml)
+# ─────────────────────────────────────────────────────────────────────────────
+# Orchestrates three services: mongo, backend, frontend.
+# `depends_on` controls startup order.
+# A named network lets containers talk to each other by service name.
+#
+# docker compose up --build   → build images + start all services
+# docker compose down -v      → stop + remove containers and volumes
+
+version: '3.9'
+
+services:
+  # ── MongoDB ──────────────────────────────────────────────────────────────
+  mongo:
+    image: mongo:7
+    container_name: mern-todo-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"          # Expose for local tools like MongoDB Compass
+    volumes:
+      - mongo-data:/data/db    # Named volume: data persists across restarts
+    networks:
+      - mern-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+
+  # ── Backend (Express API) ─────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mern-todo-backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      # Use service name 'mongo' as hostname — Docker DNS resolves it
+      MONGO_URI: mongodb://mongo:27017/mern-todo
+      JWT_SECRET: ${JWT_SECRET:-supersecretjwtkeychangeme}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
+      FRONTEND_URL: http://localhost
+    depends_on:
+      mongo:
+        condition: service_healthy   # wait for mongo health check to pass
+    networks:
+      - mern-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:5000/health"]
+      interval: 20s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  # ── Frontend (React + nginx) ──────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: mern-todo-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - mern-network
+
+# ── Persistent Volumes ────────────────────────────────────────────────────
+volumes:
+  mongo-data:
+    name: mern-todo-mongo-data
+
+# ── Network ───────────────────────────────────────────────────────────────
+networks:
+  mern-network:
+    name: mern-todo-network
+    driver: bridge

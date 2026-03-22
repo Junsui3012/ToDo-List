@@ -1,0 +1,84 @@
+.todo-form { margin-bottom: 24px; }
+
+.todo-form-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.todo-form-main { flex: 1; min-width: 200px; position: relative; }
+
+.todo-input {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+  transition: border-color 0.15s;
+}
+.todo-input:focus        { outline: none; border-color: var(--accent); }
+.todo-input--error       { border-color: var(--danger); }
+.todo-input::placeholder { color: var(--text-dim); }
+.todo-input-error { position: absolute; bottom: -18px; left: 0; font-size: 0.73rem; color: var(--danger); }
+
+.todo-select,
+.todo-date {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.todo-select:focus,
+.todo-date:focus { outline: none; border-color: var(--accent); }
+
+.todo-date       { color-scheme: dark; }
+.todo-date::-webkit-calendar-picker-indicator { filter: invert(0.6); cursor: pointer; }
+
+.todo-form-actions { display: flex; gap: 8px; }
+
+.btn-add {
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  border-radius: var(--radius);
+  padding: 10px 18px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex; align-items: center; gap: 6px;
+  transition: background 0.15s;
+}
+.btn-add:hover:not(:disabled) { background: var(--accent-dark); }
+.btn-add:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-cancel {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.btn-cancel:hover { border-color: var(--danger); color: var(--danger); }
+
+.todo-form--edit {
+  background: rgba(74,222,128,0.04);
+  border: 1px solid rgba(74,222,128,0.15);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-bottom: 0;
+}

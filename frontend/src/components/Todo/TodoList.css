@@ -1,0 +1,84 @@
+.todo-list-wrapper { display: flex; flex-direction: column; }
+
+/* Stats bar */
+.todo-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.stat-chip {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px 14px;
+}
+.stat-chip--active { border-color: rgba(74,222,128,0.3); }
+.stat-chip--done   { border-color: rgba(96,165,250,0.3); }
+.stat-num  { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
+.stat-label{ font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+.stat-chip--active .stat-num { color: var(--accent); }
+.stat-chip--done   .stat-num { color: var(--info); }
+
+.stat-progress {
+  flex: 1;
+  min-width: 80px;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.stat-progress-bar {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+/* Loading */
+.todo-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+/* Error */
+.todo-error {
+  background: rgba(248,113,113,0.08);
+  border: 1px solid rgba(248,113,113,0.25);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  color: var(--danger);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+/* Empty state */
+.todo-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+.todo-empty-icon  { font-size: 2.5rem; color: var(--text-dim); margin-bottom: 14px; }
+.todo-empty-title { font-size: 1rem; color: var(--text-muted); margin-bottom: 6px; }
+.todo-empty-sub   { font-size: 0.85rem; color: var(--text-dim); }
+
+/* List */
+.todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
